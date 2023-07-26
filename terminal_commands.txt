@@ -1,0 +1,12 @@
+mkdir testing-FastApi && cd testing-FastApi
+virtualenv FastapiVenv
+cd FastapiVenv
+cd Scripts
+activate
+CD ../..
+pip install fastapi
+pip install uvicorn
+code .
+uvicorn main:app --reload
+c
+doskey/history>terminal_commands.txt
