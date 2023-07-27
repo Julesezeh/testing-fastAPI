@@ -7,7 +7,9 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"name": "Jules", "mentality": "Slime"}
+    name = "Jules"
+    mentality = "Slime"
+    return {"name": name, "mentality": mentality}
 
 
 @app.get("/number/")
@@ -22,3 +24,10 @@ async def spec_range_rando(num: int):
     randint = random.randint(0, num)
     list_of_rando = [x for x in range(0, randint)]
     return {"number range generated": list_of_rando, "limit set by you": num}
+
+
+@app.get("/name/{name}/")
+async def myname(name: str):
+    name = name
+    welcome = f"Hello {name}"
+    return {welcome}
