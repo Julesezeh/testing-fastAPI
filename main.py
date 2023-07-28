@@ -1,8 +1,16 @@
 from fastapi import FastAPI
 import json
 import random
+from enum import Enum
 
 app = FastAPI()
+
+
+# predefined values for a path operation
+class ModelName(str, Enum):
+    alex = "alex"
+    bodega = "bodega"
+    leia = "leia"
 
 
 @app.get("/")
@@ -31,3 +39,18 @@ async def myname(name: str):
     name = name
     welcome = f"Hello {name}"
     return {welcome}
+
+
+# Using the predefined values
+@app.get("/users/{username}/")
+async def users(username: ModelName):
+    if username is ModelName.alex:
+        name = "alex"
+    if username is ModelName.bodega:
+        name = "bodega"
+    if username is ModelName.leia:
+        name = "leia"
+    if name:
+        return {"model_name": name}
+    else:
+        return {"model_name": "fraud"}
