@@ -13,6 +13,10 @@ class ModelName(str, Enum):
     leia = "leia"
 
 
+# Fake db
+fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"}]
+
+
 @app.get("/")
 async def root():
     name = "Jules"
@@ -41,7 +45,7 @@ async def myname(name: str):
     return {welcome}
 
 
-# Using the predefined values
+# Using the predefined values (defined in ModelName above)
 @app.get("/users/{username}/")
 async def users(username: ModelName):
     if username is ModelName.alex:
@@ -54,3 +58,9 @@ async def users(username: ModelName):
         return {"model_name": name}
     else:
         return {"model_name": "fraud"}
+
+
+# Query parameters (Using fake db defined above)
+@app.get("/items/")
+async def read_items(skip: int = 0, limit: int = 10):
+    return fake_items_db[skip : skip + limit]
