@@ -82,7 +82,17 @@ async def read_user_item(
 
 
 # Required query parameters (simply don't set a default value)
+# If you don't want to add a specific value but just make it optional, set the default as None. (|None = None)
 @app.get("/items/{item_id}")
 async def read_user_item(item_id: str, needy: str):
     item = {"item_id": item_id, "needy": needy}
+    return item
+
+
+# Defining required, optional and default valued query parameters
+@app.get("/items/{item_id}")
+async def read_user_item(
+    item_id: str, needy: str, skip: int = 0, limit: int | None = None
+):
+    item = {"item_id": item_id, "needy": needy, "skip": skip, "limit": limit}
     return item
