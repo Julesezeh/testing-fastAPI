@@ -79,3 +79,10 @@ async def read_user_item(
             {"description": "This is an amazing item that has a long description"}
         )
     return item
+
+
+# Required query parameters (simply don't set a default value)
+@app.get("/items/{item_id}")
+async def read_user_item(item_id: str, needy: str):
+    item = {"item_id": item_id, "needy": needy}
+    return item
