@@ -23,3 +23,11 @@ class Users(BaseModel):
     middle_name: str = None
     gender: Gender
     role: List[Role]
+
+
+class User_update(BaseModel):
+    first_name: str = None
+    last_name: str = None
+    middle_name: str = None
+    gender: Gender = None
+    role: List[Role] = [Role.student]
