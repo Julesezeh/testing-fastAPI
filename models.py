@@ -20,5 +20,6 @@ class Users(BaseModel):
     id: UUID = uuid4()
     first_name: str
     last_name: str
+    middle_name: str = None
     gender: Gender
     role: List[Role]
