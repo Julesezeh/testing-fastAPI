@@ -123,7 +123,7 @@ async def read_user_item(
 
 
 # GETTING USERS
-@app.get("api/users/")
+@app.get("/api/users/")
 async def users():
     return db
 
