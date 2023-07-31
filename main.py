@@ -119,7 +119,17 @@ async def read_user_item(
     return item
 
 
-# Using the fake database
-@app.get("/users/")
+# USING THE MAKESHIFT DB
+
+
+# GETTING USERS
+@app.get("api/users/")
 async def users():
     return db
+
+
+# CREATING A USER
+@app.post("/api/users/")
+async def register_user(user: Users):
+    db.append(user)
+    return {"id": user.id}
