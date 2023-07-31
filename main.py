@@ -2,6 +2,9 @@ from fastapi import FastAPI
 import json
 import random
 from enum import Enum
+from models import Users, Gender, Role
+from uuid import uuid4
+from typing import List
 
 app = FastAPI()
 
@@ -15,6 +18,24 @@ class ModelName(str, Enum):
 
 # Fake db
 fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"}]
+
+# second bd from tutorial
+db: List[Users] = [
+    Users(
+        id=uuid4(),
+        first_name="James",
+        last_name="St. Patrick",
+        gender=Gender.male,
+        role=[Role.admin],
+    ),
+    Users(
+        id=uuid4(),
+        first_name="Phoenix",
+        last_name="Okoye-ezeh",
+        gender=Gender.female,
+        role=[Role.student, Role.admin],
+    ),
+]
 
 
 @app.get("/")
@@ -83,10 +104,10 @@ async def read_user_item(
 
 # Required query parameters (simply don't set a default value)
 # If you don't want to add a specific value but just make it optional, set the default as None. (|None = None)
-@app.get("/items/{item_id}")
-async def read_user_item(item_id: str, needy: str):
-    item = {"item_id": item_id, "needy": needy}
-    return item
+# @app.get("/items/{item_id}")
+# async def read_user_item(item_id: str, needy: str):
+#     item = {"item_id": item_id, "needy": needy}
+#     return item
 
 
 # Defining required, optional and default valued query parameters
@@ -96,3 +117,9 @@ async def read_user_item(
 ):
     item = {"item_id": item_id, "needy": needy, "skip": skip, "limit": limit}
     return item
+
+
+# Using the fake database
+@app.get("/users/")
+async def users():
+    return db
