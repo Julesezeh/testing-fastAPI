@@ -161,3 +161,7 @@ async def update_user(user_id: UUID, user_details: User_update):
                 user.gender = user_details.gender
             if user_details.role:
                 user.role = user_details.role
+
+    raise HTTPException(
+        status_code=400, detail=f"user with id: {user_id} does not exist."
+    )
