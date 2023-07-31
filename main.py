@@ -143,7 +143,7 @@ async def delete_user(user_id: UUID):
             db.remove(user)
             return
     return HTTPException(
-        status_code=400, detail=f"User with id: {user_id} does not exist."
+        status_code=400, detail=f"user with id: {user_id} does not exist."
     )
 
 
@@ -161,7 +161,7 @@ async def update_user(user_id: UUID, user_details: User_update):
                 user.gender = user_details.gender
             if user_details.role:
                 user.role = user_details.role
-
-    raise HTTPException(
+            return
+    return HTTPException(
         status_code=400, detail=f"user with id: {user_id} does not exist."
     )
