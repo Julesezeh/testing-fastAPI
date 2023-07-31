@@ -1,9 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 import json
 import random
 from enum import Enum
-from models import Users, Gender, Role
-from uuid import uuid4
+from models import Users, Gender, Role, User_update
+from uuid import uuid4, UUID
 from typing import List
 
 app = FastAPI()
@@ -124,7 +124,7 @@ async def read_user_item(
 
 # GETTING USERS
 @app.get("/api/users/")
-async def users():
+async def get_users():
     return db
 
 
@@ -133,3 +133,31 @@ async def users():
 async def register_user(user: Users):
     db.append(user)
     return {"id": user.id}
+
+
+# DELETING A USER
+@app.delete("/api/users/{user_id}")
+async def delete_user(user_id: UUID):
+    for user in db:
+        if user.id == user_id:
+            db.remove(user)
+            return
+    return HTTPException(
+        status_code=400, detail=f"User with id: {user_id} does not exist."
+    )
+
+
+@app.put("/api/users/{user_id}")
+async def update_user(user_id: UUID, user_details: User_update):
+    for user in db:
+        if user.id == user_id:
+            if user_details.first_name:
+                user.first_name = user_details.first_name
+            if user_details.last_name:
+                user.last_name = user_details.last_name
+            if user_details.middle_name:
+                user.middle_name = user_details.middle_name
+            if user_details.gender:
+                user.gender = user_details.gender
+            if user_details.role:
+                user.role = user_details.role
